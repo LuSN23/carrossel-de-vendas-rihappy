@@ -1,0 +1,1 @@
+Recriação do carrossel de vendas da empresa Ri Happy. Projeto desenvolvido durante a mentoria Recriação do Carrossel de vendas do Site da RiHappy com o mentor e desenvolvedor Jeferson Duarte da plataforma Digital Innovation One utilizando as tecnologias HTML, CSS e JavaScript.
