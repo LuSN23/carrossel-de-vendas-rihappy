@@ -294,8 +294,8 @@ function initializedSlick() {
     infinite: true, //Se vai poder mudar os itens infinitamente, quando se chegar ao final vai tudo se repetir
     slidesToShow: 4, //Quantos cards serão mostrados por vez
     slidesToScroll: 4, //Quantidade de cards que vão ser rolados de uma vez
-    arrows: true,      //Se vão ter setinhas de controle nos lados
-    dots: true        //Mostra pontos para interação
+    arrows: true      //Se vão ter setinhas de controle nos lados
+    // dots: true        //Mostra pontos para interação, a RiHappy não utiliza por isso foi retirado
   });
   //Ativa o slick
   slickInitialized = true;

@@ -141,3 +141,9 @@ body {
   border-radius: 0 0 15px 15px;
   margin-bottom: 0;
 }
+
+/*Pseudo-elemento = possibilita a estilização de uma parte específica de um elemento, nesse caso do código do slick, prev = seta da esquerda e next = seta da direita*/
+.slick-prev:before, .slick-next:before { 
+  color: #ccc;
+  font-size: 32px;
+}
