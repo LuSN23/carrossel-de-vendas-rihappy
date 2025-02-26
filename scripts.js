@@ -1,3 +1,4 @@
+let slickInitialized = false; //Deixar "setada" como false porque quando a página é carregada não temos o slick pronto
 
 // Arrays de produtos para cada aba
 const novidades = [
@@ -85,7 +86,7 @@ const mais_vendidos = [
     "seller": "Mundo Infantil Store"
   },
   {
-    "productName": "Kit De Jogos - Stitch - Super Kit 3 em1 - Toyster",
+    "productName": "Kit De Jogos - Stitch - Super Kit 3 em 1 - Toyster",
     "imageUrl": "https://rihappynovo.vtexassets.com/arquivos/ids/6357597/Kit-De-Jogos---Stitch---Super-Kit-3-em1---Toyster-0.jpg?v=638574272262800000",
     "installments": 4,
     "installmentValue": 32.49,
@@ -283,3 +284,90 @@ const diversao_fora = [
   }
 ];
 
+//Função para inicializar o 'slick' = uma biblioteca do JQuery para criar carrosséis customizáveis e responsíveis
+function initializedSlick() {
+  const slickElement = document.querySelector('.product-carousel'); //Vai aplicar a biblioteca a essa classe na div correspondente
+
+  //Sintaxe do JQuery - Tipo de carrossel multiple-items
+  $(slickElement).slick({ //No lugar de slickElement originalmente vem '.multiple-items' para ser substituído pelo seu elemento
+    //São aplicados esses métodos abaixo no seu elemento = nesse caso no slickElement/product-carousel
+    infinite: true, //Se vai poder mudar os itens infinitamente, quando se chegar ao final vai tudo se repetir
+    slidesToShow: 4, //Quantos cards serão mostrados por vez
+    slidesToScroll: 4, //Quantidade de cards que vão ser rolados de uma vez
+    arrows: true      //Se vão ter setinhas de controle nos lados
+  });
+  //Ativa o slick
+  slickInitialized = true;
+}
+
+
+
+//Função para fazer renderização dos produtos
+function renderProducts(products){  //Passa as categorias de produtos/arrays
+  const productCarousel = document.querySelector('.product-carousel'); //Seleciona o carrossel
+  productCarousel.innerHTML = ''; //Limpa o conteúdo anterior renderizado
+  
+  products.forEach(product => { //cada product é um objeto do array "products" = novidades, mais vendidos...
+    //Armazena dentro da const productElement a renderização em HTML de cada produto em um card, com suas informações
+    //product.productName acessa dentro do objeto do momento sua propriedade productName
+    const productElement = `
+    <div class="product-card"> 
+    <img src="${product.imageUrl} alt=${product.productName}">
+    <h3>${product.productName}</h3>
+    <p class="price>Por ${product.totalPrice}</p>
+    <p class="installments">ou ${product.installments}x de ${product.installmentValue}</p>
+    <button class="adicionar">Comprar</button> <!-- Adicionado algumas classes para fazer a estilização dos elementos -->
+    <p class="seller">Vendido por ${product.seller}</p>
+    </div>
+    `;
+    //Preenchimento do carrossel com as informações dos produtos/product cards acima
+    productCarousel.innerHTML += productElement; //Coloca os cards em HTML para dentro da div com a classe product-carousel 
+    //Capturada pela const productCarrousel
+  });
+}
+
+
+
+
+//Função para identificar onde você está clicando
+function handleClickTab(event) {
+  const tabs = document.querySelectorAll('.tab-link'); //Seleciona todos os elementos com .tab-link e guarda dentro de tabs numa nodeList
+  tabs.forEach(tab => tab.classList.remove('active')); //Sempre que a funçãio handleClickTab for executada/sempre que se clicar num dos 
+                                                       // botões, haverá a remoção da classe active do botão anterior clicado
+  if(slickInitialized) {  //Se slick for true
+    $('.product-carousel').slick('unslick');  //Chamando aqui de novo porque sempre que eu alterar a minha aba, eu vou precisar pegar novamente a div 
+                                              // com a classe .product-carrousel, desfazer o slick e inicializá-lo de novo
+  }                                                     
+  event.target.classList.add('active'); //Por meio do target(o elemento que dispara o evento) adiciona a classe 'active' ao elemento clicado/target
+
+  //Faz a identificação do botão que a gente clicou
+  //O dataset no JS é identificado retirando o data e - do nome colocado no HTML, nesse caso passa aqui de data-category para category
+  const category = event.target.dataset.category
+  //Aqui é feita a manipulação da categoria clicada, se o botão clicado for === à novidades passa a const novidades com o array de objetos dela 
+  // para ser renderizado, ou seja, passa a constante dela para a função renderProducts
+  if(category === 'novidades') {
+    renderProducts(novidades)
+  }else if(category === 'mais_vendidos'){
+    renderProducts(mais_vendidos)
+  }else if(category === 'fantasias'){
+    renderProducts(fantasias);   
+  }else if(category === 'jogos'){
+    renderProducts(jogos);
+  }else if(category === 'diversao_fora'){
+    renderProducts(diversao_fora);
+  }
+}
+
+
+//Um eventListener para escutar quando o conteúdo da página for carregado = 'DOMContentLoaded'(condição para disparo da função)
+//Carregando as primeiras informações na tela
+document.addEventListener('DOMContentLoaded', function(){
+  //Chama a função renderProducts passando inicialmente a const novidades como parâmetro
+  renderProducts(novidades);
+  //
+  const tabs = document.querySelectorAll('.tab-link');
+  //Vamos de novo percorrer todas os elementos .tab-link e escutar por um evento de click em um deles para disparar a 
+  //função callback handleClickTab
+  tabs.forEach(tab => tab.addEventListener('click', handleClickTab));
+
+})

@@ -11,11 +11,13 @@
 <body>
     <!--Cada button corresponde a um array de produtos-->
     <div class="tabs">
-        <button class="tab-link active">Novidades</button>
-        <button class="tab-link">Mais Vendidos</button>
-        <button class="tab-link">Fantasias</button>
-        <button class="tab-link">Jogos</button>
-        <button class="tab-link">Diversão</button>
+        <!-- Dataset => agrupamento de dados - usado para passar valores de um determinado elemento para o JavaScript fazer a manipulação 
+         'data-category' nesse caso, que estará exportando para o navegador essa informação -->
+        <button class="tab-link active" data-category="novidades">Novidades</button> 
+        <button class="tab-link" data-category="mais-vendidos">Mais Vendidos</button>
+        <button class="tab-link" data-category="fantasias">Fantasias</button>
+        <button class="tab-link" data-category="jogos">Jogos</button>
+        <button class="tab-link" data-category="diversao">Diversão</button>
     </div>
 
     <div class="product-carousel">
