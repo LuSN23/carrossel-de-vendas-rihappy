@@ -294,7 +294,8 @@ function initializedSlick() {
     infinite: true, //Se vai poder mudar os itens infinitamente, quando se chegar ao final vai tudo se repetir
     slidesToShow: 4, //Quantos cards serão mostrados por vez
     slidesToScroll: 4, //Quantidade de cards que vão ser rolados de uma vez
-    arrows: true      //Se vão ter setinhas de controle nos lados
+    arrows: true,      //Se vão ter setinhas de controle nos lados
+    dots: true        //Mostra pontos para interação
   });
   //Ativa o slick
   slickInitialized = true;
@@ -324,6 +325,7 @@ function renderProducts(products){  //Passa as categorias de produtos/arrays
     productCarousel.innerHTML += productElement; //Coloca os cards em HTML para dentro da div com a classe product-carousel 
     //Capturada pela const productCarrousel
   });
+  initializedSlick();
 }
 
 
