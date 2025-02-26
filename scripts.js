@@ -313,12 +313,14 @@ function renderProducts(products){  //Passa as categorias de produtos/arrays
     //product.productName acessa dentro do objeto do momento sua propriedade productName
     const productElement = `
     <div class="product-card"> 
-    <img src="${product.imageUrl} alt=${product.productName}">
-    <h3>${product.productName}</h3>
-    <p class="price>Por ${product.totalPrice}</p>
-    <p class="installments">ou ${product.installments}x de ${product.installmentValue}</p>
+    <div class="imageProduct"><img src="${product.imageUrl} alt=${product.productName}"></div>
+    <h3 class="productName">${product.productName}</h3>
+    <p class="price">Por ${product.totalPrice}</p>
+    <p class="installments">ou ${product.installments}x de ${product.installmentValue} sem juros</p>
     <button class="adicionar">Comprar</button> <!-- Adicionado algumas classes para fazer a estilização dos elementos -->
-    <p class="seller">Vendido por ${product.seller}</p>
+    <!-- Para exibir o nome do vendedor e trocar a frase que o acompanha usando uma condicional ternária para esta decisão -->
+    <p class="seller">${product.seller === "RiHappy" ? `Vendido e entregue por <span class="sellerType"> ${product.seller}</span>` : `Oferta por <span class="sellerType"> 
+    ${product.seller}</span>`} </p> 
     </div>
     `;
     //Preenchimento do carrossel com as informações dos produtos/product cards acima
@@ -348,9 +350,11 @@ function handleClickTab(event) {
   //Aqui é feita a manipulação da categoria clicada, se o botão clicado for === à novidades passa a const novidades com o array de objetos dela 
   // para ser renderizado, ou seja, passa a constante dela para a função renderProducts
   if(category === 'novidades') {
-    renderProducts(novidades)
+    renderProducts(novidades);
   }else if(category === 'mais_vendidos'){
-    renderProducts(mais_vendidos)
+    renderProducts(mais_vendidos);
+    console.log('mais vendidos'); //Utilizado para debug, se não mostrasse a string no console/não entrasse na condição, 
+                                  //ou o nome na const/array estava diferente ou nome estava com alguma diferença no HTML
   }else if(category === 'fantasias'){
     renderProducts(fantasias);   
   }else if(category === 'jogos'){
